@@ -28,9 +28,14 @@ class SpecialitySDJpaServiceTest {
 
     @Test
     void deleteByObject() {
+        //given
         Speciality speciality = new Speciality();
+
+        //when
         service.delete(speciality);
 
+        //then
+        then(specialtyRepository).should().delete(any(Speciality.class));
         verify(specialtyRepository, times(1)).delete(any(Speciality.class));
     }
 
@@ -45,7 +50,6 @@ class SpecialitySDJpaServiceTest {
 
     @Test
     void findByIdBdd() {
-
         //given
         Speciality speciality = new Speciality();
         given(specialtyRepository.findById(1L)).willReturn(Optional.of(speciality));
@@ -61,9 +65,14 @@ class SpecialitySDJpaServiceTest {
 
     @Test
     void deleteById() {
+        //given - none
+
+        //when
         service.deleteById(1L);
         service.deleteById(1L);
-        
+
+        //then
+        then(specialtyRepository).should(times(2)).deleteById(1L );
         verify(specialtyRepository, times(2)).deleteById(1L);
     }
 
@@ -94,6 +103,10 @@ class SpecialitySDJpaServiceTest {
 
     @Test
     void testDelete() {
+        //when
         service.delete(new Speciality());
+
+        //then
+        then(specialtyRepository).should().delete(any(Speciality.class));
     }
 }
